@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#fff4f3"/>
+  <meta name="description" content="A little note from someone who cares about you.">
+  <title>For Rishita ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"><span>♥</span><span>✦</span><span>♥</span><span>✧</span><span>♥</span><span>✦</span><span>♥</span></div>
+  <main id="app">
+    <section class="screen active" id="welcome">
+      <div class="eyebrow"><span class="sparkle">✦</span> A LITTLE NOTE FOR YOU <span class="sparkle">✦</span></div>
+      <div class="envelope-wrap"><div class="envelope"><div class="letter-peek">♡</div><div class="env-flap"></div><div class="env-heart">♥</div></div></div>
+      <h1>Hey, <em>Rishita.</em></h1>
+      <p class="lead">There’s something I’ve been wanting to tell you.<br/>I made this little corner of the internet just for you.</p>
+      <button class="primary" id="begin">Open your letter <span>→</span></button>
+      <p class="tiny-note">Made with a little courage, and a lot of love.</p>
+    </section>
+
+    <section class="screen" id="lock">
+      <div class="eyebrow">JUST BETWEEN US</div>
+      <div class="lock-icon">♡</div>
+      <h2>A little secret</h2>
+      <p class="muted">Enter our special number to continue.</p>
+      <div class="pin-dots" id="dots"><i></i><i></i><i></i><i></i></div>
+      <div class="keypad" id="keypad">
+        <button data-key="1">1</button><button data-key="2">2</button><button data-key="3">3</button>
+        <button data-key="4">4</button><button data-key="5">5</button><button data-key="6">6</button>
+        <button data-key="7">7</button><button data-key="8">8</button><button data-key="9">9</button>
+        <button class="utility" data-key="clear">Clear</button><button data-key="0">0</button><button class="utility" data-key="back">⌫</button>
+      </div>
+      <p class="error" id="pin-error" aria-live="polite"></p>
+    </section>
+
+    <section class="screen" id="sorry">
+      <div class="eyebrow">FROM THE BOTTOM OF MY HEART</div>
+      <div class="big-heart">♥</div>
+      <h2>I'm truly <em>sorry.</em></h2>
+      <p class="body-copy">Rishita, I know things haven't been right between us lately. We had a fight, and because of my actions, I ended up hurting you. I've been thinking about how I behaved, and honestly, I'm ashamed of it.</p>
+      <p class="body-copy">You didn't deserve to be treated that way. I'm genuinely sorry. I don't want to make excuses or brush aside how you felt. I want to take responsibility for my actions.</p>
+      <button class="primary next" data-next="letter">There's more I want to say <span>→</span></button>
+    </section>
+
+    <section class="screen" id="letter">
+      <div class="eyebrow">A LETTER, JUST FOR YOU</div>
+      <article class="letter-card">
+        <div class="letter-top">♡ &nbsp; a few words from me</div>
+        <h2>Dear <em>Rishita,</em></h2>
+        <p>I miss you. I miss talking to you, sharing the little things with you, laughing with you and having you close. I miss the comfort of knowing we can tell each other anything.</p>
+        <p>I don't want this distance between us. I understand that you may need time, and I don't expect a few words on a screen to fix what happened. I just hope you know that I recognise where I went wrong, and I want to do better through my actions, not just my words.</p>
+        <p>You mean so much to me. I'm ashamed of how I behaved, and I wish I could take back the hurt I caused. What I can do now is listen, learn, be more thoughtful, and show you the care and respect you deserve.</p>
+        <p>Whenever you're ready, I hope we can talk. No pressure, no rush. I just want to find our way back to the warmth we share.</p>
+        <div class="signature">With love, and a truly sorry heart,<br/><strong>Yours ❤️</strong></div>
+      </article>
+      <button class="primary next" data-next="memories">A little look at us <span>→</span></button>
+    </section>
+
+    <section class="screen" id="memories">
+      <div class="eyebrow">THE LITTLE MOMENTS I TREASURE</div>
+      <h2>Some of my favourite <em>us</em> moments.</h2>
+      <p class="muted">Every picture holds a memory I’m grateful for.</p>
+      <div class="gallery">
+        <figure class="photo photo-tall"><img src="assets/111.jpeg" alt="A quiet moment together by the water" loading="lazy"><figcaption>Side by side, through it all.</figcaption></figure>
+        <figure class="photo"><img src="assets/116.jpeg" alt="A happy selfie together" loading="lazy"><figcaption>That smile I love.</figcaption></figure>
+        <figure class="photo"><img src="assets/114.jpeg" alt="A day out together" loading="lazy"><figcaption>Little adventures.</figcaption></figure>
+        <figure class="photo"><img src="assets/113.jpeg" alt="A festive evening together" loading="lazy"><figcaption>Making ordinary days special.</figcaption></figure>
+        <figure class="photo"><img src="assets/112.jpeg" alt="A sweet moment together" loading="lazy"><figcaption>My favourite kind of company.</figcaption></figure>
+        <figure class="photo photo-wide"><img src="assets/115.jpeg" alt="A happy memory together" loading="lazy"><figcaption>More memories I hold close.</figcaption></figure>
+      </div>
+      <button class="primary next" data-next="heart">One more little thing <span>→</span></button>
+    </section>
+
+    <section class="screen" id="heart">
+      <div class="eyebrow">NO PRESSURE. JUST A LITTLE HEART.</div>
+      <h2>Can I ask you something?</h2>
+      <p class="muted">Press and hold the heart for a few seconds. Let it fill up with all the things I wish I could say.</p>
+      <button class="hold-heart" id="hold-heart" aria-label="Press and hold the heart">
+        <svg viewBox="0 0 120 110" role="img"><defs><clipPath id="heart-clip"><path d="M60 101 C48 89 8 60 8 32 C8 15 20 5 35 5 C47 5 56 12 60 24 C64 12 73 5 85 5 C100 5 112 15 112 32 C112 60 72 89 60 101Z"/></clipPath></defs><path class="heart-outline" d="M60 101 C48 89 8 60 8 32 C8 15 20 5 35 5 C47 5 56 12 60 24 C64 12 73 5 85 5 C100 5 112 15 112 32 C112 60 72 89 60 101Z"/><rect id="heart-fill" x="0" y="110" width="120" height="110" clip-path="url(#heart-clip)"/></svg>
+      </button>
+      <p class="hold-label" id="hold-label">Touch and hold ♥</p>
+      <p class="tiny-note">You don't owe me forgiveness. I only hope to earn back your trust.</p>
+      <button class="primary next" data-next="gifts">Continue <span>→</span></button>
+    </section>
+
+    <section class="screen" id="gifts">
+      <div class="eyebrow">A FEW LITTLE VIRTUAL HUGS</div>
+      <h2>Some things, <em>just for you.</em></h2>
+      <p class="muted">Tap each little gift to open it.</p>
+      <div class="gifts">
+        <button class="gift" data-message="A bouquet of patience, kindness, and a thousand gentle apologies. 🌷"><span>💐</span><strong>A bouquet</strong><small>Tap to unwrap</small></button>
+        <button class="gift" data-message="One very warm, very cosy hug — only whenever you feel like one. 🧸"><span>🧸</span><strong>A teddy hug</strong><small>Tap to unwrap</small></button>
+        <button class="gift" data-message="A little chocolate to make your day sweeter. You deserve all the sweetness. 🍫"><span>🍫</span><strong>Something sweet</strong><small>Tap to unwrap</small></button>
+      </div>
+      <div class="gift-message" id="gift-message" aria-live="polite">Your little surprises will appear here. 💗</div>
+      <button class="primary next" data-next="final">One last thing <span>→</span></button>
+    </section>
+
+    <section class="screen final-screen" id="final">
+      <div class="confetti-heart">♥</div>
+      <div class="eyebrow">UNTIL WE TALK AGAIN</div>
+      <h1>You're so <em>important</em> to me, Rishita.</h1>
+      <p class="body-copy">I hope we can begin with a conversation, at your pace. I want to listen, understand, and show you that I can be better. I miss you, and I'm truly sorry for hurting you.</p>
+      <div class="final-photo"><img src="assets/115.jpeg" alt="A favourite memory together"></div>
+      <p class="final-line">No matter what, thank you for the beautiful memories. ❤️</p>
+      <button class="primary" id="replay">Read it again <span>↻</span></button>
+      <p class="tiny-note">Made with love, just for you.</p>
+    </section>
+  </main>
+  <footer><span>R + T</span> &nbsp; · &nbsp; a little page made with love ♡ <button id="music-toggle" aria-label="Toggle background music">♫ Music: off</button></footer>
+  <audio id="music" loop preload="none"></audio>
+  <script src="app.js"></script>
+</body>
+</html>

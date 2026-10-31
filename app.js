@@ -39,10 +39,12 @@ holdButton.addEventListener("pointerdown",startHold);
 ["pointerup","pointerleave","pointercancel"].forEach(ev=>holdButton.addEventListener(ev,stopHold));
 document.querySelectorAll(".gift").forEach(g=>g.addEventListener("click",()=>{document.querySelectorAll(".gift").forEach(x=>x.classList.remove("opened"));g.classList.add("opened");document.getElementById("gift-message").textContent=g.dataset.message}));
 document.getElementById("replay").addEventListener("click",()=>{resetPin();heartProgress=0;updateHeart();showScreen("welcome")});
+
+// Original ambient music is synthesised in the browser; no external audio file is required.
 const musicButton=document.getElementById("music-toggle");
 let audioContext=null;
+let masterGain=null;
 let musicTimer=null;
-let activeVoices=[];
 const progression=[
   [261.63,329.63,392.00,493.88],
   [220.00,261.63,329.63,392.00],
@@ -51,47 +53,77 @@ const progression=[
 ];
 let chordIndex=0;
 function playSoftChord(){
-  if(!audioContext || !musicOn)return;
+  if(!audioContext || !musicOn || audioContext.state!=="running")return;
   const now=audioContext.currentTime;
-  progression[chordIndex%progression.length].forEach((frequency,index)=>{
+  const notes=progression[chordIndex%progression.length];
+  notes.forEach((frequency,index)=>{
     const oscillator=audioContext.createOscillator();
-    const gain=audioContext.createGain();
-    oscillator.type="sine";
-    oscillator.frequency.value=frequency;
-    gain.gain.setValueAtTime(0.0001,now);
-    gain.gain.exponentialRampToValueAtTime(index===0?0.009:0.006,now+0.7);
-    gain.gain.exponentialRampToValueAtTime(0.0001,now+3.3);
-    oscillator.connect(gain);
-    gain.connect(audioContext.destination);
+    const noteGain=audioContext.createGain();
+    oscillator.type=index===0?"triangle":"sine";
+    oscillator.frequency.setValueAtTime(frequency,now);
+    noteGain.gain.setValueAtTime(0.0001,now);
+    noteGain.gain.exponentialRampToValueAtTime(index===0?0.055:0.032,now+0.35);
+    noteGain.gain.setValueAtTime(index===0?0.055:0.032,now+2.0);
+    noteGain.gain.exponentialRampToValueAtTime(0.0001,now+2.8);
+    oscillator.connect(noteGain);
+    noteGain.connect(masterGain);
     oscillator.start(now);
-    oscillator.stop(now+3.35);
-    activeVoices.push({oscillator,gain});
+    oscillator.stop(now+2.85);
+  });
+  // A soft arpeggio gives the chords a recognisable musical movement.
+  [0,2,1,3].forEach((note,i)=>{
+    const start=now+0.45+i*0.42;
+    const oscillator=audioContext.createOscillator();
+    const noteGain=audioContext.createGain();
+    oscillator.type="sine";
+    oscillator.frequency.value=notes[note]*2;
+    noteGain.gain.setValueAtTime(0.0001,start);
+    noteGain.gain.exponentialRampToValueAtTime(0.018,start+0.08);
+    noteGain.gain.exponentialRampToValueAtTime(0.0001,start+0.55);
+    oscillator.connect(noteGain);
+    noteGain.connect(masterGain);
+    oscillator.start(start);
+    oscillator.stop(start+0.58);
   });
   chordIndex++;
-  activeVoices=activeVoices.filter(v=>v.oscillator.context.state==="running");
 }
-musicButton.addEventListener("click",async()=>{
-  if(!musicOn){
-    const AudioContextClass=window.AudioContext||window.webkitAudioContext;
-    if(!AudioContextClass){musicButton.textContent="♫ Music unavailable";return}
+async function startMusic(){
+  const AudioContextClass=window.AudioContext||window.webkitAudioContext;
+  if(!AudioContextClass){musicButton.textContent="♫ Audio unavailable";return}
+  try{
     audioContext=audioContext||new AudioContextClass();
-    if(audioContext.state==="suspended")await audioContext.resume();
+    if(!masterGain){
+      masterGain=audioContext.createGain();
+      masterGain.gain.value=0.72;
+      masterGain.connect(audioContext.destination);
+    }
+    if(audioContext.state!=="running")await audioContext.resume();
+    if(audioContext.state!=="running")throw new Error("Audio is still suspended");
     musicOn=true;
     chordIndex=0;
     playSoftChord();
-    musicTimer=setInterval(playSoftChord,3100);
-    musicButton.textContent="♫ Music: on";
-    musicButton.title="Soft original piano-like ambient tones";
-  }else{
-    musicOn=false;
     clearInterval(musicTimer);
-    if(audioContext){
-      const now=audioContext.currentTime;
-      activeVoices.forEach(v=>{
-        try{v.gain.gain.cancelScheduledValues(now);v.gain.gain.setTargetAtTime(0.0001,now,0.08);v.oscillator.stop(now+0.35)}catch(_){}
-      });
-      activeVoices=[];
-    }
-    musicButton.textContent="♫ Music: off";
+    musicTimer=setInterval(playSoftChord,2900);
+    musicButton.textContent="♫ Music: on";
+    musicButton.title="Soft original ambient melody — click to turn off";
+  }catch(error){
+    musicOn=false;
+    musicButton.textContent="♫ Tap to retry music";
   }
+}
+musicButton.addEventListener("click",()=>{
+  if(!musicOn){startMusic();return}
+  musicOn=false;
+  clearInterval(musicTimer);
+  if(masterGain&&audioContext){
+    masterGain.gain.cancelScheduledValues(audioContext.currentTime);
+    masterGain.gain.setTargetAtTime(0.0001,audioContext.currentTime,0.12);
+    setTimeout(()=>{
+      if(!musicOn&&audioContext){
+        masterGain.gain.setValueAtTime(0.72,audioContext.currentTime);
+      }
+    },500);
+  }
+  musicButton.textContent="♫ Music: off";
+  musicButton.title="Turn on the original ambient melody";
 });
